@@ -1,0 +1,143 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendors/jquery-2.1.4.min.js"></script>
+    </head>
+    <body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '954414911275173',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+
+    FB.login(function(response)
+      {
+          console.log(response);
+          
+      });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+
+</script>
+
+
+        <!-- Add your site or application content here -->
+        <p>Hello world! This is HTML5 Boilerplate.</p>
+
+        <label>Event ID list:</label><br/><textarea id="fbeventlist"></textarea><br/><button id="getBtn">Get!</button>
+        <br/>
+        <br/>
+        <br/>
+        <label>CSV:</label><br/><textarea id="csv"></textarea>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+        <script src="js/main.js"></script>
+
+        <script>
+
+        $( document ).ready(function() {
+          
+          $('#getBtn').on('click', function() {
+            
+            var jsn = [];
+
+            // get eventId list from textfield and convert it into an array
+            var arr = getIdArray($('#fbeventlist').val());
+            console.log(JSON.stringify(jsn));
+
+            //var t = new eventObject("961111567293871");
+            var counter = 0;
+
+            //console.log(t);
+       
+            for (i=0; i<arr.length; i++) {
+              FB.api(
+              "/" + arr[i]+ "?fields=cover,description,name,owner,place,start_time,end_time",
+              function (response) {
+                if (response && !response.error) {
+                  console.log(response);
+                  jsn[counter] = new eventObject(response.id);
+                  jsn[counter]["event_image-src"] = response.cover.source || '';
+                  jsn[counter]["event_title"] = response.name || '';
+                  jsn[counter]["event_text"] = response.description || '';
+                  jsn[counter]["event_start"] = response.start_time || '';
+                  jsn[counter]["event_end"] = response.end_time || '';
+                  jsn[counter]["event_venue"] = response.place.name || '';
+                  jsn[counter]["event_organizer"] = response.owner.name || '';
+
+                  // var coun = counter; 
+                  // var res = response.id;
+
+                  // FB.api(
+                  //     '/' + res+ "?fields=cover",
+                  //     function (response) {
+                  //       if (response && !response.error) {
+                  //         jsn[coun]["event_image-src"] = response;
+                  //       }
+                  //     }
+                  // );
+
+                  counter++;
+                  if (counter >= arr.length) {
+                    $('#csv').val(JSON.stringify(jsn))
+                  }
+
+                }
+              }
+            );
+            }
+
+              
+          });
+
+
+        });
+
+
+        function getIdArray(str) {
+          var eventarray = str.split(',');
+
+          eventarray.forEach(function(el, ind, arr){
+            arr[ind] = el.trim();
+          });
+          
+          return eventarray;
+        }
+
+        function eventObject (id) {
+          this["event_image-src"] = "";
+          this["event_venue"] = "";
+          this["event_link-href"] = "https://www.facebook.com/events/" + id + "/";
+          this["event_title"] = "";
+          this["event_start"] = "";
+          this["event_end"] = "";
+          this["event_organizer"] = "";
+          this["event_text"] = "";
+          this["event_cost__0"] = "";
+          this["event_category__Exposición__Espacios alternativos"] = "";
+          this["event_maplink__0"] = "";
+          this["event_id"] = id;
+        }
+
+        </script>
+    </body>
+</html>
