@@ -80,10 +80,12 @@
                   jsn[counter]["event_title"] = response.name || '';
                   jsn[counter]["event_text"] = response.description || '';
                   if (response.start_time) {
-                    jsn[counter]["event_start"] = formatTime(response.start_time);
+                    jsn[counter]["event_start"] = formatDate(response.start_time);
+                    jsn[counter]["event_start-time"] = formatTime(response.start_time);
                   }
                   if (response.end_time) {
-                    jsn[counter]["event_end"] = formatTime(response.end_time);
+                    jsn[counter]["event_end"] = formatDate(response.end_time);
+                    jsn[counter]["event_end-time"] = formatTime(response.end_time);
                   }
                   jsn[counter]["event_venue"] = response.place.name || '';
                   jsn[counter]["event_organizer"] = response.owner.name || '';
@@ -138,14 +140,25 @@
           this["event_text"] = "";
           this["event_cost__0"] = "";
           this["event_category__Exposición__Espacios alternativos"] = "";
-          this["event_maplink__0"] = "";
+          this["event_start-time"] = "";
+          this["event_end-time"] = "";
           this["event_id"] = id;
+        }
+
+        function formatDate(str) {
+          var t = new Date(str);
+          var f = t.getDate() + "/" + (t.getMonth() + 1) + '/' + t.getFullYear();
+          return f;
         }
 
         function formatTime(str) {
           var t = new Date(str);
-          var f = t.getDate() + "/" + (t.getMonth() + 1) + '/' + t.getFullYear();
+          var f = t.getHours() + ":" + pad(t.getMinutes());
           return f;
+        }
+
+        function pad(n) {
+            return (n < 10) ? ("0" + n) : n;
         }
 
         </script>
