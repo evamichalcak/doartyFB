@@ -49,6 +49,10 @@
         <br/>
         <br/>
         <label>CSV:</label><br/><textarea id="csv"></textarea>
+        <br/>
+        <br/>
+        <br/>
+        <a href="http://jsonprettyprint.com/" target="_blank">prettyprint</a>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
         <script src="js/main.js"></script>
 
@@ -87,8 +91,12 @@
                     jsn[counter]["event_end"] = formatDate(response.end_time);
                     jsn[counter]["event_end-time"] = formatTime(response.end_time);
                   }
-                  jsn[counter]["event_venue"] = response.place.name || '';
-                  jsn[counter]["event_organizer"] = response.owner.name || '';
+                  if (response.place) {
+                    jsn[counter]["event_venue"] = response.place.name || '';
+                  }
+                  if (response.owner) {
+                    jsn[counter]["event_organizer"] = response.owner.name || '';
+                  }
 
                   // var coun = counter; 
                   // var res = response.id;
