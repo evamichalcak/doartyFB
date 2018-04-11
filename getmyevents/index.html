@@ -10,16 +10,21 @@
         <!-- Place favicon.ico in the root directory -->
 
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendors/jquery-2.1.4.min.js"></script>
+        <script
+  src="https://code.jquery.com/jquery-2.1.4.min.js"
+  integrity="sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw="
+  crossorigin="anonymous"></script>
     </head>
     <body>
 <script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '954414911275173',
+      autoLogAppEvents : true,
       xfbml      : true,
       version    : 'v2.5'
     });
+
 
     FB.login(function(response)
       {
@@ -63,7 +68,6 @@
           $('#getBtn').on('click', function() {
             
             var jsn = [];
-
             // get eventId list from textfield and convert it into an array
             var arr = getIdArray($('#fbeventlist').val());
             console.log(JSON.stringify(jsn));
