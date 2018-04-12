@@ -22,7 +22,7 @@
       appId      : '954414911275173',
       autoLogAppEvents : true,
       xfbml      : true,
-      version    : 'v2.5'
+      version    : 'v2.9'
     });
 
 
@@ -79,7 +79,7 @@
        
             for (i=0; i<arr.length; i++) {
               FB.api(
-              "/" + arr[i]+ "?fields=cover,description,name,owner,place,start_time,end_time",
+              "/" + arr[i]+ "?fields=cover,description,name,start_time,end_time,place", // removed 'owner' since it breaks thigs
               function (response) {
                 if (response && !response.error) {
                   console.log(response);
@@ -151,7 +151,7 @@
           this["event_organizer"] = "";
           this["event_text"] = "";
           this["event_cost__0"] = "";
-          this["event_category__Exposición__Espacios alternativos"] = "";
+          this["event_category"] = "";
           this["event_start-time"] = "";
           this["event_end-time"] = "";
           this["event_id"] = id;
